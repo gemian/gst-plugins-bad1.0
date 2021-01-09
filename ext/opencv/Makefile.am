@@ -41,9 +41,11 @@ libgstopencv_la_CFLAGS = $(GST_PLUGINS_BASE_CFLAGS) $(GST_BASE_CFLAGS) \
 	-DCV_INLINE="static inline" \
 	-DCV_NO_BACKWARD_COMPATIBILITY
 
+# workaround for broken pkg-config file
+OPENCV_LIBS_FIXED = $(subst ocl,ml,$(OPENCV_LIBS))
 libgstopencv_la_LIBADD = \
 	$(top_builddir)/gst-libs/gst/opencv/libgstopencv-$(GST_API_VERSION).la \
-	$(GST_LIBS) $(GST_BASE_LIBS) $(OPENCV_LIBS) \
+	$(GST_LIBS) $(GST_BASE_LIBS) $(OPENCV_LIBS_FIXED) \
 	$(GSTPB_BASE_LIBS) -lgstvideo-$(GST_API_VERSION)
 
 libgstopencv_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)

@@ -54,8 +54,8 @@ dnl sets GST_LT_LDFLAGS
 AS_LIBTOOL(GST, 1405, 0, 1405)
 
 dnl *** required versions of GStreamer stuff ***
-GST_REQ=1.14.5
-GSTPB_REQ=1.14.5
+GST_REQ=1.14.4
+GSTPB_REQ=1.14.4
 
 dnl *** autotools stuff ****
 
@@ -787,6 +787,18 @@ AG_GST_CHECK_FEATURE(ANDROID_MEDIA, [Android Media], androidmedia, [
       HAVE_ANDROID_MEDIA="no"
       ;;
   esac
+])
+
+dnl *** A Hybris-based Platform ***
+translit(dnm, m, l) AM_CONDITIONAL(USE_ANDROID_MEDIA_HYBRIS, true)
+HAVE_ANDROID_MEDIA_HYBRIS="no"
+dnl Check for the presence of Hybris (Ubuntu Touch)
+AG_GST_CHECK_FEATURE(ANDROID_MEDIA_HYBRIS, [Android Media Hybris], androidmediahybris, [
+  AC_CHECK_HEADER(hybris/media/media_codec_layer.h,
+      [PKG_CHECK_MODULES(UBUNTU_PLATFORM, libubuntu-platform-hardware-api,
+              [HAVE_ANDROID_MEDIA_HYBRIS="yes"],
+              [HAVE_ANDROID_MEDIA_HYBRIS="no"]
+      )], HAVE_ANDROID_MEDIA_HYBRIS="no")
 ])
 
 dnl *** AppleMedia (OS X and iOS) ***
@@ -2332,6 +2344,7 @@ AM_CONDITIONAL(DECKLINK_WIN, false)
 AM_CONDITIONAL(USE_DIRECTFB, false)
 AM_CONDITIONAL(USE_WAYLAND, false)
 AM_CONDITIONAL(USE_DAALA, false)
+AM_CONDITIONAL(USE_ANDROID_MEDIA_HYBRIS, false)
 AM_CONDITIONAL(USE_DTS, false)
 AM_CONDITIONAL(USE_EXIF, false)
 AM_CONDITIONAL(USE_RESINDVD, false)
@@ -2632,6 +2645,7 @@ ext/dc1394/Makefile
 ext/directfb/Makefile
 ext/wayland/Makefile
 ext/daala/Makefile
+ext/hybris/Makefile
 ext/dts/Makefile
 ext/faac/Makefile
 ext/faad/Makefile

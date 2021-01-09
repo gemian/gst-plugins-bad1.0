@@ -51,6 +51,10 @@ struct _GstAmcAudioDec
 
   /* < private > */
   GstAmcCodec *codec;
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+  GstAmcBuffer *input_buffers, *output_buffers;
+  gsize n_input_buffers, n_output_buffers;
+#endif
 
   GstCaps *input_caps;
   GList *codec_datas;
@@ -81,6 +85,10 @@ struct _GstAmcAudioDec
   gboolean draining;
   /* TRUE if the component is drained currently */
   gboolean drained;
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+  /* TRUE if upstream is EOS */
+  gboolean eos;
+#endif
 
   GstFlowReturn downstream_flow_ret;
 };

@@ -216,6 +216,12 @@ else
 check_msdk=
 endif
 
+if USE_ANDROID_MEDIA_HYBRIS
+check_gstamc=elements/gstamcvideodec
+else
+check_gstamc=
+endif
+
 VALGRIND_TO_FIX = \
 	elements/mpeg2enc \
 	elements/mplex    \
@@ -278,6 +284,7 @@ check_PROGRAMS = \
 	elements/rtponviftimestamp \
 	elements/id3mux \
 	pipelines/mxf \
+	pipelines/gstamcvideodec \
 	libs/isoff \
 	libs/mpegvideoparser \
 	libs/mpegts \

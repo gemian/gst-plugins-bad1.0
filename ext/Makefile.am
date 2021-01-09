@@ -76,6 +76,12 @@ else
 DAALA_DIR=
 endif
 
+if USE_ANDROID_MEDIA_HYBRIS
+HYBRIS_DIR=hybris
+else
+HYBRIS_DIR=
+endif
+
 if USE_DTS
 DTS_DIR=dts
 else
@@ -432,6 +438,7 @@ SUBDIRS=\
 	$(LV2_DIR) \
 	$(LIBDE265_DIR) \
 	$(LIBMMS_DIR) \
+	$(HYBRIS_DIR) \
 	$(MODPLUG_DIR) \
 	$(MPEG2ENC_DIR) \
 	$(MPLEX_DIR) \
@@ -482,6 +489,7 @@ DIST_SUBDIRS = \
 	dc1394 \
 	directfb \
 	wayland \
+	hybris \
 	faac \
 	faad \
 	fdkaac \
