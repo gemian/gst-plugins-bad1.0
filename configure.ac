@@ -2573,6 +2573,7 @@ gst-libs/Makefile
 gst-libs/gst/Makefile
 gst-libs/gst/adaptivedemux/Makefile
 gst-libs/gst/basecamerabinsrc/Makefile
+gst-libs/gst/mir/Makefile
 gst-libs/gst/insertbin/Makefile
 gst-libs/gst/interfaces/Makefile
 gst-libs/gst/isoff/Makefile

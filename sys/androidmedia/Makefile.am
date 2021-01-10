@@ -38,6 +38,8 @@ noinst_HEADERS = \
 	gstsensors.h
 
 libgstandroidmedia_la_CFLAGS = \
+	-I$(top_srcdir)/gst-libs \
+	-I$(top_builddir)/gst-libs \
 	$(GST_PLUGINS_BAD_CFLAGS) \
 	$(GST_PLUGINS_BASE_CFLAGS) \
 	$(GST_GL_CFLAGS) \
@@ -57,7 +59,8 @@ libgstandroidmedia_la_LIBADD = \
 	-lmedia \
 	$(GST_BASE_LIBS) \
 	$(GST_LIBS) \
-	$(ORC_LIBS)
+	$(ORC_LIBS) \
+	$(top_builddir)/gst-libs/gst/mir/libgstmiralloc-@GST_API_VERSION@.la
 libgstandroidmedia_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
 
 if USE_ANDROID_MEDIA

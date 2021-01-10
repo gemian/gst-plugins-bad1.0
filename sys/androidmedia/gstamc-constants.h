@@ -92,7 +92,10 @@ enum
   COLOR_Format18BitBGR666 = 41,
   COLOR_Format24BitARGB6666 = 42,
   COLOR_Format24BitABGR6666 = 43,
+  COLOR_MTK_FormatYUVPrivate = 0x32315679,
   COLOR_FormatAndroidOpaque = 0x7F000789,
+  /* From hardware/ti/omap4xxx/domx/omx_core/inc/OMX_TI_IVCommon.h */
+  COLOR_TI_COLOR_FormatYUV420PackedSemiPlanar = 0x100,
   COLOR_TI_FormatYUV420PackedSemiPlanar = 0x7f000100,
   COLOR_INTEL_FormatYUV420PackedSemiPlanar = 0x7fa00e00,
   COLOR_INTEL_FormatYUV420PackedSemiPlanar_Tiled = 0x7fa00f00,
@@ -103,6 +106,7 @@ enum
   /* NV12 but with stride and plane heights aligned to 32, Stores two images,
    * one after the other in top-bottom layout */
   COLOR_QCOM_FormatYVU420SemiPlanar32mMultiView = 0x7fa30c05,
+  COLOR_QCOM_FormatYUV420SemiPlanarUBWC = 0x7fa30c06,
   /* From hardware/ti/omap4xxx/domx/omx_core/inc/OMX_TI_IVCommon.h */
   COLOR_TI_FormatYUV420PackedSemiPlanarInterlaced = 0x7f000001,
   COLOR_FormatYUV420Flexible = 0x7f420888,
@@ -112,8 +116,15 @@ enum
    * FIXME: Not actually implemented in the video decoder, it will just error out
    * The format seems to be equiv to V4L2_PIX_FMT_NV12MT_16X16 */
   COLOR_OMX_SEC_FormatNV12Tiled = 0x7fc00002,
+  COLOR_EXYNOS_FormatNV12Tiled = 0x7fc00002,
+  COLOR_EXYNOS_FormatNV21Linear = 0x7f000011,
+  COLOR_EXYNOS_FormatYVU420Planar = 0x7F000012,
+  COLOR_EXYNOS_Format32bitABGR8888 = 0x7F000013,
   /* YV12: http://developer.android.com/reference/android/graphics/ImageFormat.html#YV12 */
   COLOR_FormatYV12 = 0x32315659,
+  /* MTK formats. FormatYV12 is used by VP8/9. */
+  COLOR_MTK_FormatYV12 = 0x7f000200,
+  COLOR_MTK_FormatBitStream = 0x7f000300
 };
 
 enum
