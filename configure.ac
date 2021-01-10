@@ -795,7 +795,7 @@ HAVE_ANDROID_MEDIA_HYBRIS="no"
 dnl Check for the presence of Hybris (Ubuntu Touch)
 AG_GST_CHECK_FEATURE(ANDROID_MEDIA_HYBRIS, [Android Media Hybris], androidmediahybris, [
   AC_CHECK_HEADER(hybris/media/media_codec_layer.h,
-      [PKG_CHECK_MODULES(UBUNTU_PLATFORM, libubuntu-platform-hardware-api,
+      [PKG_CHECK_MODULES(UBUNTU_PLATFORM, ubuntu-platform-api,
               [HAVE_ANDROID_MEDIA_HYBRIS="yes"],
               [HAVE_ANDROID_MEDIA_HYBRIS="no"]
       )], HAVE_ANDROID_MEDIA_HYBRIS="no")

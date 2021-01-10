@@ -38,6 +38,7 @@ libass-dev (>= 0.10.4)
 libmodplug-dev
 libkate-dev (>= 0.1.7)
 libmedia-dev [i386 armhf arm64]
+libubuntu-application-api-dev [i386 armhf arm64]
 libgme-dev
 librsvg2-dev (>= 2.36.2)
 libcairo2-dev
