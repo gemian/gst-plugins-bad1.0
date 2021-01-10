@@ -28,6 +28,7 @@ libcurl4-gnutls-dev (>= 7.35.0)
 libdca-dev
 libde265-dev
 libdvdnav-dev (>= 4.1.2) [!hurd-any]
+libegl1-mesa-dev
 libexempi-dev
 libexif-dev (>= 0.6.16)
 libfaad-dev (>= 2.7)
@@ -43,6 +44,7 @@ libiptcdata0-dev (>= 1.0.2)
 libkate-dev (>= 0.1.7)
 liblcms2-dev (>= 2.7)
 liblilv-dev (>= 0.16)
+libmedia-dev [i386 armhf arm64]
 libmjpegtools-dev
 libmms-dev (>= 0.4)
 libmodplug-dev
