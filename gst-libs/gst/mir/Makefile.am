@@ -9,13 +9,12 @@ libgstmiralloc_@GST_API_VERSION@include_HEADERS = mirallocator.h gstmircontext.h
 
 libgstmiralloc_@GST_API_VERSION@_la_CFLAGS = \
 	$(GST_PLUGINS_BAD_CFLAGS) \
-	$(GST_PLUGINS_BASE_CFLAGS) \
 	$(GST_CFLAGS) \
 	$(MIR_CFLAGS)
 
 libgstmiralloc_@GST_API_VERSION@_la_LIBADD = \
-	$(GST_PLUGINS_BASE_LIBS) \
 	-lgstvideo-@GST_API_VERSION@ \
+	$(GST_BASE_LIBS) \
 	$(GST_LIBS) \
 	$(MIR_LIBS)
 	-lmedia

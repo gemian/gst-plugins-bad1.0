@@ -6,7 +6,7 @@ if USE_ANDROID_MEDIA_HYBRIS
 	gstamcaudiodechybris.c \
 	gstamcvideodechybris.c
 else
-libgstandroidmedia_la_SOURCES = \
+ libgstandroidmedia_la_SOURCES = \
 	gstahcsrc.c \
 	gstahssrc.c \
 	gstamcaudiodec.c \
@@ -38,8 +38,6 @@ noinst_HEADERS = \
 	gstsensors.h
 
 libgstandroidmedia_la_CFLAGS = \
-	-I$(top_srcdir)/gst-libs \
-	-I$(top_builddir)/gst-libs \
 	$(GST_PLUGINS_BAD_CFLAGS) \
 	$(GST_PLUGINS_BASE_CFLAGS) \
 	$(GST_GL_CFLAGS) \
@@ -50,18 +48,21 @@ libgstandroidmedia_la_CFLAGS = \
 	-DGST_USE_UNSTABLE_API
 
 libgstandroidmedia_la_LIBADD = \
-	$(top_builddir)/gst-libs/gst/interfaces/libgstphotography-$(GST_API_VERSION).la \
 	$(GST_PLUGINS_BASE_LIBS) \
 	$(GST_PLUGIN_BAD_LIBS) \
+	-lgstvideo-@GST_API_VERSION@ \
 	-lgstaudio-@GST_API_VERSION@ \
 	-lgstpbutils-@GST_API_VERSION@ \
-	-lgstvideo-@GST_API_VERSION@ \
 	-lmedia \
+	$(GST_GL_LIBS) \
 	$(GST_BASE_LIBS) \
 	$(GST_LIBS) \
 	$(ORC_LIBS) \
 	$(top_builddir)/gst-libs/gst/mir/libgstmiralloc-@GST_API_VERSION@.la
-libgstandroidmedia_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
+libgstandroidmedia_la_LDFLAGS = \
+	$(GST_PLUGIN_LDFLAGS) \
+	$(GST_BASE_LDFLAGS) \
+	$(GST_PLUGINS_BASE_LDFLAGS)
 
 if USE_ANDROID_MEDIA
 androidmedia_java_classesdir = $(datadir)/gst-android/ndk-build/androidmedia/

@@ -30,6 +30,12 @@
 #include <hybris/media/media_codec_layer.h>
 #include <hybris/media/surface_texture_client_hybris.h>
 
+G_BEGIN_DECLS
+
+#ifndef GST_MIR_API
+#define GST_MIR_API GST_EXPORT
+#endif
+
 #define GST_MIR_IMAGE_MEMORY_TYPE "MirImage"
 
 #define GST_CAPS_FEATURE_MEMORY_MIR_IMAGE "memory:MirImage"
@@ -50,20 +56,36 @@ typedef struct
 } GstMirImageMemory;
 
 /* MirImage GstMemory handling */
+GST_MIR_API
 gboolean gst_mir_image_memory_is_mappable (void);
+
+GST_MIR_API
 gboolean gst_is_mir_image_memory (GstMemory * mem);
+
+GST_MIR_API
 gsize gst_mir_image_memory_get_buffer_index (GstMemory * mem);
+
+GST_MIR_API
 MediaCodecDelegate gst_mir_image_memory_get_codec (GstMemory * mem);
+
+GST_MIR_API
 gboolean gst_mir_do_hardware_render(GstMemory * mem);
+
 void gst_mir_image_memory_set_codec (GstMemory * mem, MediaCodecDelegate delegate);
 void gst_mir_image_memory_set_buffer_index (GstMemory * mem, gsize index);
 
 /* Generic MirImage allocator that doesn't support mapping, copying or anything */
+GST_MIR_API
 GstAllocator *gst_mir_image_allocator_obtain (void);
+
 GstMemory *gst_mir_image_allocator_alloc (GstAllocator * allocator,
     gint width, gint height, gsize * size);
+
+GST_MIR_API
 GstMemory *gst_mir_image_allocator_wrap (GstAllocator * allocator, MediaCodecDelegate delegate,
     gsize buffer_id, GstMemoryFlags flags, gsize size, gboolean do_hardware_render,
     gpointer user_data, GDestroyNotify user_data_destroy);
+
+G_END_DECLS
 
 #endif /* __GST_MIR_ALLOCATOR_H__ */
