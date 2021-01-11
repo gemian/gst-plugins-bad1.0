@@ -11,3 +11,4 @@ debian/tmp/usr/lib/*/libgsturidownloader-@GST_ABI@.so.*
 debian/tmp/usr/lib/*/libgstisoff-@GST_ABI@.so.*
 debian/tmp/usr/lib/*/libgstwebrtc-@GST_ABI@.so.*
 @wayland@
+@miralloc@

@@ -69,7 +69,7 @@ gst_extra_build_depends += , libvulkan-dev [linux-any]
 
 PLUGINS += plugins-bad opencv
 ifeq ($(DEB_HOST_ARCH_OS),linux)
-PLUGINS +=
+PLUGINS += hybris
 endif
 VERSIONIZE= \
 	plugins-bad-doc.install \
