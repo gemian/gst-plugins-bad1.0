@@ -77,6 +77,13 @@ VERSIONIZE= \
 #debug package
 DEB_DH_STRIP_ARGS := --dbg-package=$(gst_pkgname)-plugins-bad-dbg
 
+# miralloc is just enabled for some archs (need android for the other archs)
+android_hybris_archs := i386 armhf arm64
+ifeq ($(DEB_HOST_ARCH_CPU), $(findstring $(DEB_HOST_ARCH_CPU), $(android_hybris_archs)))
+miralloc = debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/libgstmiralloc-$(gst_abi).so.*
+mirallocdev = debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/libgstmiralloc-$(gst_abi).so
+endif
+
 ifeq ($(DEB_HOST_ARCH_OS),linux)
 dvb = debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/gstreamer-$(gst_abi)/libgstdvb.so
 fbdev = debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/gstreamer-$(gst_abi)/libgstfbdevsink.so
@@ -149,12 +156,15 @@ pre-build::
 	done
 
 	sed -e 's/@GST_ABI@/$(gst_abi)/g' -e 's,@wayland@,$(wayland),g' \
+			-e 's,@miralloc@,$(miralloc),g' \
 			debian/libgstreamer-plugins-bad.install \
 			> debian/libgstreamer-plugins-bad$(gst_deb_abi).install
 	sed -e 's/@GST_ABI@/$(gst_abi)/g' \
 			debian/libgstreamer-opencv.install \
 			> debian/libgstreamer-opencv$(gst_deb_abi).install
-	sed 's/@GST_ABI@/$(gst_abi)/g' debian/libgstreamer-plugins-bad-dev.install \
+	sed -e 's/@GST_ABI@/$(gst_abi)/g' \
+			-e 's,@mirallocdev@,$(mirallocdev),g' \
+			debian/libgstreamer-plugins-bad-dev.install \
 			> debian/libgstreamer-plugins-bad$(gst_abi)-dev.install
 	cp debian/gir1.2-gst-plugins-bad.install \
 			debian/gir1.2-gst-plugins-bad-$(gst_abi).install
