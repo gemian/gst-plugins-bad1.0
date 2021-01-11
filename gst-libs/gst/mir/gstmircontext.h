@@ -34,6 +34,7 @@ G_BEGIN_DECLS
 
 #define GST_MIR_CONTEXT_TYPE "gst.mir.MirContext"
 
+GST_MIR_API
 GstContext *gst_mir_context_new_with_stc (
     SurfaceTextureClientHybris surface_texture_client);
 
