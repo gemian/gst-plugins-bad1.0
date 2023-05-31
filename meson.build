@@ -176,6 +176,7 @@ check_headers = [
   ['HAVE_WINDOWS_H', 'windows.h'],
   ['HAVE_WINSOCK2_H', 'winsock2.h'],
   ['HAVE_WS2TCPIP_H', 'ws2tcpip.h'],
+  ['HAVE_HYBRIS_H', 'hybris/media/media_codec_layer.h'],
 ]
 
 foreach h : check_headers

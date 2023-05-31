@@ -1,3 +1,9 @@
+gst-plugins-bad1.0 (1.22.0+gemian1) UNRELEASED; urgency=medium
+
+  * Branching for Gemian
+
+ -- Adam Boardman <adamboardman@gmail.com>  Mon, 29 May 2023 12:48:15 +0100
+
 gst-plugins-bad1.0 (1.22.0-4) unstable; urgency=medium
 
   * Team upload

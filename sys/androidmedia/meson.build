@@ -58,19 +58,27 @@ else
     '-DPLUGIN_NAME=androidmedia',
     '-DPLUGIN_DESCRIPTION="Android Media plugin"'
   ]
-  androidmedia_sources += [
-    'gstahcsrc.c',
-    'gstahssrc.c',
-    'gst-android-graphics-imageformat.c',
-    'gst-android-hardware-camera.c',
-    'gst-android-hardware-sensor.c',
-    'gstjniutils.c',
-    'jni/gstamc-codec-jni.c',
-    'jni/gstamc-codeclist-jni.c',
-    'jni/gstamc-format-jni.c',
-    'jni/gstamcsurface.c',
-    'jni/gstamcsurfacetexture-jni.c',
-  ]
+  if HAVE_HYBRIS_H
+    androidmedia_sources += [
+      'gstamchybris.c',
+      'gstamcaudiodechybris.c',
+      'gstamcvideodechybris.c'
+    ]
+  else
+    androidmedia_sources += [
+      'gstahcsrc.c',
+      'gstahssrc.c',
+      'gst-android-graphics-imageformat.c',
+      'gst-android-hardware-camera.c',
+      'gst-android-hardware-sensor.c',
+      'gstjniutils.c',
+      'jni/gstamc-codec-jni.c',
+      'jni/gstamc-codeclist-jni.c',
+      'jni/gstamc-format-jni.c',
+      'jni/gstamcsurface.c',
+      'jni/gstamcsurfacetexture-jni.c',
+    ]
+  endif
   plugin_name = 'gstandroidmedia'
 endif
 
