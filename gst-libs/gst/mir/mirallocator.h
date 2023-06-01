@@ -24,6 +24,7 @@
 
 #include <gst/gst.h>
 #include <gst/video/video.h>
+#include <gst/mir/mir-prelude.h>
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
 
@@ -50,18 +51,28 @@ typedef struct
 } GstMirImageMemory;
 
 /* MirImage GstMemory handling */
+GST_MIR_API
 gboolean gst_mir_image_memory_is_mappable (void);
+GST_MIR_API
 gboolean gst_is_mir_image_memory (GstMemory * mem);
+GST_MIR_API
 gsize gst_mir_image_memory_get_buffer_index (GstMemory * mem);
+GST_MIR_API
 MediaCodecDelegate gst_mir_image_memory_get_codec (GstMemory * mem);
+GST_MIR_API
 gboolean gst_mir_do_hardware_render(GstMemory * mem);
+GST_MIR_API
 void gst_mir_image_memory_set_codec (GstMemory * mem, MediaCodecDelegate delegate);
+GST_MIR_API
 void gst_mir_image_memory_set_buffer_index (GstMemory * mem, gsize index);
 
 /* Generic MirImage allocator that doesn't support mapping, copying or anything */
+GST_MIR_API
 GstAllocator *gst_mir_image_allocator_obtain (void);
+GST_MIR_API
 GstMemory *gst_mir_image_allocator_alloc (GstAllocator * allocator,
     gint width, gint height, gsize * size);
+GST_MIR_API
 GstMemory *gst_mir_image_allocator_wrap (GstAllocator * allocator, MediaCodecDelegate delegate,
     gsize buffer_id, GstMemoryFlags flags, gsize size, gboolean do_hardware_render,
     gpointer user_data, GDestroyNotify user_data_destroy);

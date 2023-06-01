@@ -25,16 +25,20 @@
 #include <hybris/media/surface_texture_client_hybris.h>
 
 #include <gst/gst.h>
+#include <gst/mir/mir-prelude.h>
 
 G_BEGIN_DECLS
 
 #define GST_MIR_CONTEXT_TYPE "gst.mir.MirContext"
 
+GST_MIR_API
 GstContext *gst_mir_context_new_with_stc (
     SurfaceTextureClientHybris surface_texture_client);
 
 /** Gets a context from upstream/downstream peers or from the app **/
+GST_MIR_API
 gboolean gst_mir_ensure_surface_texture_client (gpointer element);
+GST_MIR_API
 SurfaceTextureClientHybris
 gst_context_get_surface_texture_client (GstContext * context);
 
