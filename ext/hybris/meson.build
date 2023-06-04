@@ -7,7 +7,7 @@ wpe_feat = get_option('wpe').require(gstgl_dep.found(),
   error_message : 'wpe plugin enabled but GL support was not detected')
 egl_dep = dependency('egl', required : wpe_feat)
 
-gsthybris = library('gsthybris',
+gsthybris = library('gsthybrissink',
   hybris_sources,
   c_args : gst_plugins_bad_args,
   include_directories : [configinc, '/usr/include/ubuntu'],

@@ -28,10 +28,21 @@ G_BEGIN_DECLS
 typedef struct _GstAmcFormat GstAmcFormat;
 typedef struct _GstAmcColorFormatInfo GstAmcColorFormatInfo;
 
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+struct _GstAmcFormat {
+    MediaFormat format;
+};
+#endif
+
 gboolean gst_amc_format_static_init (void);
 
 GstAmcFormat * gst_amc_format_new_audio (const gchar *mime, gint sample_rate, gint channels, GError **err);
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+GstAmcFormat * gst_amc_format_new_video (const gchar *mime, gint width, gint height, gint buffsize, GError **err);
+#else
 GstAmcFormat * gst_amc_format_new_video (const gchar *mime, gint width, gint height, GError **err);
+#endif
+
 void gst_amc_format_free (GstAmcFormat * format);
 
 gchar * gst_amc_format_to_string (GstAmcFormat * format, GError **err);

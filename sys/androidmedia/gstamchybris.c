@@ -26,6 +26,8 @@
 
 #include "gstamc.h"
 #include "gstamc-constants.h"
+#include "gstamc-codec.h"
+#include "gstamc-format.h"
 
 #include "gstamcvideodec.h"
 #include "gstamcaudiodec.h"
@@ -234,7 +236,7 @@ G_GNUC_PRINTF (4, 5)
 }
 
 GstAmcCodec *
-gst_amc_codec_new (const gchar * name, GError ** err)
+gst_amc_codec_new (const gchar * name, gboolean is_encoder, GError ** err)
 {
   GstAmcCodec *codec = NULL;
   gchar *name_str = NULL;
@@ -1268,7 +1270,7 @@ scan_codecs (GstPlugin * plugin)
       }
 
       for (k = 0; k < n_elems; k++) {
-        GST_INFO ("Color format %zu: %d", k, color_formats_elems[k]);
+        GST_INFO ("Color format %zu: 0x%x", k, color_formats_elems[k]);
         gst_codec_type->color_formats[k] = color_formats_elems[k];
       }
 
@@ -1281,7 +1283,7 @@ scan_codecs (GstPlugin * plugin)
 
         if (!ignore_unknown_color_formats
             && !accepted_color_formats (gst_codec_type, is_encoder)) {
-          GST_ERROR ("Codec has unknown color formats, ignoring");
+          GST_ERROR ("Codec has unknown color formats, ignoring (is_encoder: %d)", is_encoder);
           valid_codec = FALSE;
           g_assert_not_reached ();
           goto next_supported_type;
@@ -1477,6 +1479,12 @@ static const struct
   256, GST_VIDEO_FORMAT_NV12}, {
   263, GST_VIDEO_FORMAT_NV12}, {
   COLOR_MTK_FormatYV12, GST_VIDEO_FORMAT_YV12}, {
+  COLOR_OMX_Format32BitRGBA8888, GST_VIDEO_FORMAT_RGBA}, {
+  COLOR_Format16bitRGB565, GST_VIDEO_FORMAT_RGB}, {
+  COLOR_Format25bitARGB1888, GST_VIDEO_FORMAT_ARGB}, {
+  COLOR_FormatCbYCrY, GST_VIDEO_FORMAT_UYVY}, {
+  COLOR_FormatYUV420PackedPlanar, GST_VIDEO_FORMAT_YV12}, {
+  COLOR_FormatYUV420PackedSemiPlanar, GST_VIDEO_FORMAT_YV12}, {
   COLOR_QCOM_FormatYVU420SemiPlanar32m, GST_VIDEO_FORMAT_NV12}, {
   COLOR_QCOM_FormatYVU420SemiPlanar32mMultiView, GST_VIDEO_FORMAT_NV12}, {
   COLOR_QCOM_FormatYUV420SemiPlanarUBWC, GST_VIDEO_FORMAT_NV12}
@@ -1495,7 +1503,7 @@ accepted_color_formats (GstAmcCodecType * type, gboolean is_encoder)
       all--;
 
     for (j = 0; j < G_N_ELEMENTS (color_format_mapping_table); j++) {
-      //g_print("color_format_mapping_table[%d].color_format: %d, type->color_formats[%d]: %d", j, color_format_mapping_table[j].color_format, i, type->color_formats[i]);
+      GST_INFO("color_format_mapping_table[%d].color_format: 0x%x, type->color_formats[%d]: 0x%x", j, color_format_mapping_table[j].color_format, i, type->color_formats[i]);
       if (color_format_mapping_table[j].color_format == type->color_formats[i]) {
         found = TRUE;
         break;
@@ -1506,6 +1514,7 @@ accepted_color_formats (GstAmcCodecType * type, gboolean is_encoder)
       accepted++;
   }
 
+  GST_INFO("accepted(%d), all(%d)", accepted, all);
   if (is_encoder)
     return accepted > 0;
   else

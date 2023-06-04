@@ -23,6 +23,16 @@
 
 #include <gst/gst.h>
 
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+#include <hybris/media/media_codec_layer.h>
+#include <hybris/media/media_format_layer.h>
+
+#include <application/description.h>
+#include <application/instance.h>
+#include <application/options.h>
+#include <application/lifecycle_delegate.h>
+#endif
+
 #include "gstamc-format.h"
 #include "gstamcsurfacetexture.h"
 
@@ -32,10 +42,21 @@ typedef struct _GstAmcBuffer GstAmcBuffer;
 typedef struct _GstAmcBufferInfo GstAmcBufferInfo;
 typedef struct _GstAmcCodec GstAmcCodec;
 
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+struct _GstAmcCodec {
+  MediaCodecDelegate *codec_delegate;
+  SurfaceTextureClientHybris surface_texture_client;
+  struct ua_session *session;
+  struct ua_display *display;
+  struct ua_window *window;
+  guint texture_id;
+};
+
 struct _GstAmcBuffer {
   guint8 *data;
   gsize size;
 };
+#endif
 
 struct _GstAmcBufferInfo {
   gint flags;
@@ -53,7 +74,14 @@ gboolean gst_amc_buffer_set_position_and_limit (GstAmcBuffer * buffer, GError **
 GstAmcCodec * gst_amc_codec_new (const gchar *name, gboolean is_encoder, GError **err);
 void gst_amc_codec_free (GstAmcCodec * codec);
 
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+gboolean gst_amc_codec_configure (GstAmcCodec * codec, GstAmcFormat * format, SurfaceTextureClientHybris stc, gint flags, GError **err);
+gboolean gst_amc_codec_set_surface_texture_client (GstAmcCodec * codec, SurfaceTextureClientHybris stc);
+SurfaceTextureClientHybris gst_amc_codec_get_surface_texture_client (GstAmcCodec * codec);
+#else
 gboolean gst_amc_codec_configure (GstAmcCodec * codec, GstAmcFormat * format, GstAmcSurfaceTexture * surface_texture, GError **err);
+#endif
+
 GstAmcFormat * gst_amc_codec_get_output_format (GstAmcCodec * codec, GError **err);
 
 gboolean gst_amc_codec_start (GstAmcCodec * codec, GError **err);

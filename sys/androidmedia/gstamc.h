@@ -30,6 +30,42 @@
 
 G_BEGIN_DECLS
 
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+struct ua_session
+{
+#if 0
+  UAUiSession *session;
+  UAUiSessionProperties *properties;
+#endif
+  UApplicationDescription *app_description;
+  UApplicationOptions *app_options;
+  UApplicationId *app_id;
+  UApplicationInstance *app_instance;
+  UApplicationLifecycleDelegate *app_lifecycle_delegate;
+};
+
+struct ua_display
+{
+#if 0
+  UAUiDisplay *display;
+#endif
+  int width;
+  int height;
+  uint32_t formats;
+};
+
+struct ua_window
+{
+  struct ua_display *display;
+  int width;
+  int height;
+#if 0
+  UAUiWindow *window;
+  UAUiWindowProperties *properties;
+#endif
+  EGLNativeWindowType egl_native_window;
+};
+#endif
 typedef struct _GstAmcCodecType GstAmcCodecType;
 typedef struct _GstAmcCodecInfo GstAmcCodecInfo;
 
@@ -52,6 +88,17 @@ struct _GstAmcCodecInfo {
 };
 
 extern GQuark gst_amc_codec_info_quark;
+
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+GstAmcBuffer * gst_amc_codec_get_output_buffers (GstAmcCodec * codec, gsize * n_buffers);
+GstAmcBuffer * gst_amc_codec_get_input_buffers (GstAmcCodec * codec, gsize * n_buffers);
+#endif
+
+void gst_amc_codec_free_buffers (GstAmcBuffer * buffers, gsize n_buffers);
+
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+void gst_amc_surface_texture_client_set_hardware_rendering (SurfaceTextureClientHybris stc, gboolean hardware_rendering);
+#endif
 
 GstVideoFormat gst_amc_color_format_to_video_format (const GstAmcCodecInfo * codec_info, const gchar * mime, gint color_format);
 gint gst_amc_video_format_to_color_format (const GstAmcCodecInfo * codec_info, const gchar * mime, GstVideoFormat video_format);

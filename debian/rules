@@ -122,6 +122,7 @@ endif
 
 	mkdir -p $(CURDIR)/fake-home
 	HOME=$(CURDIR)/fake-home \
-	LD_LIBRARY_PATH=debian/libgstreamer-plugins-bad1.0-0/usr/lib/$(DEB_HOST_MULTIARCH):debian/libgstreamer-opencv1.0-0/usr/lib/$(DEB_HOST_MULTIARCH):$(LD_LIBRARY_PATH) \
+#	GST_DEBUG="*:6" \
+	LD_LIBRARY_PATH=debian/libgstreamer-plugins-bad1.0-0/usr/lib/$(DEB_HOST_MULTIARCH):debian/libgstreamer-opencv1.0-0/usr/lib/$(DEB_HOST_MULTIARCH):debian/gstreamer1.0-hybris/usr/lib/$(DEB_HOST_MULTIARCH):$(LD_LIBRARY_PATH) \
 	    dh_gstscancodecs
 	rm -rf $(CURDIR)/fake-home

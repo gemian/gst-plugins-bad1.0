@@ -22,12 +22,20 @@
 #define __GST_AMC_VIDEO_DEC_H__
 
 #include <gst/gst.h>
-#include <gst/gl/gl.h>
+#ifdef HAVE_ANDROID_MEDIA
+  #include <gst/gl/gl.h>
+#endif
 
 #include <gst/video/gstvideodecoder.h>
 
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+  #include <gst/mir/gstmircontext.h>
+#endif
+
 #include "gstamc.h"
-#include "gstamcsurfacetexture.h"
+#ifdef HAVE_ANDROID_MEDIA
+  #include "gstamcsurface.h"
+#endif
 
 G_BEGIN_DECLS
 
@@ -62,9 +70,20 @@ struct _GstAmcVideoDec
   /* < private > */
   GstAmcCodec *codec;
   GstAmcCodecConfig codec_config;
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+  GstAmcBuffer *input_buffers, *output_buffers;
+  gsize n_input_buffers, n_output_buffers;
+#endif
 
   GstVideoCodecState *input_state;
   gboolean input_state_changed;
+
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+  /* Current timeout value to pass for doing
+   * queueing/dequeueing of input/output buffers
+   */
+  gint64 current_timeout;
+#endif
 
   /* Output format of the codec */
   GstVideoFormat format;
@@ -81,6 +100,10 @@ struct _GstAmcVideoDec
   gboolean started;
   gboolean flushing;
 
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+  guint8 num_outbuf_dequeue_tries;
+#endif
+
   GstClockTime last_upstream_ts;
 
   /* Draining state */
@@ -90,18 +113,25 @@ struct _GstAmcVideoDec
   gboolean draining;
   /* TRUE if the component is drained currently */
   gboolean drained;
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+  gboolean eos;
+#endif
 
-  GstAmcSurfaceTexture *surface;
+#ifdef HAVE_ANDROID_MEDIA
+  GstAmcSurface *surface;
 
   GstGLDisplay *gl_display;
   GstGLContext *gl_context;
   GstGLContext *other_gl_context;
+#endif
 
   gboolean downstream_supports_gl;
   GstFlowReturn downstream_flow_ret;
 
   gboolean gl_mem_attached;
+#ifdef HAVE_ANDROID_MEDIA
   GstGLMemory *oes_mem;
+#endif
   GError *gl_error;
   GMutex gl_lock;
   GCond gl_cond;
@@ -110,6 +140,16 @@ struct _GstAmcVideoDec
   guint gl_ready_frame_count;  /* n buffers ready for GL access */
   guint gl_released_frame_count;  /* n buffers released */
   GQueue *gl_queue;
+
+#ifdef HAVE_ANDROID_MEDIA_HYBRIS
+  /* To wait for source caps to be set */
+  GMutex srccaps_lock;
+  GCond srccaps_cond;
+  gboolean srccaps_set;
+  gboolean waiting_segment;
+
+  const gchar *mime;
+#endif
 };
 
 struct _GstAmcVideoDecClass

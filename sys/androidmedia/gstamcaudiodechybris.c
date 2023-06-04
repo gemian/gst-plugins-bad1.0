@@ -370,7 +370,7 @@ gst_amc_audio_dec_open (GstAudioDecoder * decoder)
 
   GST_DEBUG_OBJECT (self, "Opening decoder");
 
-  self->codec = gst_amc_codec_new (klass->codec_info->name, &err);
+  self->codec = gst_amc_codec_new (klass->codec_info->name, FALSE, &err);
   if (!self->codec)
     return FALSE;
   self->started = FALSE;

@@ -525,7 +525,7 @@ gst_amc_video_dec_open (GstVideoDecoder * decoder)
 
   GST_DEBUG_OBJECT (self, "Opening hardware decoder");
 
-  self->codec = gst_amc_codec_new (klass->codec_info->name, &err);
+  self->codec = gst_amc_codec_new (klass->codec_info->name, FALSE, &err);
   if (!self->codec) {
     GST_ELEMENT_ERROR_FROM_ERROR (self, err);
     return FALSE;

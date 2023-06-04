@@ -4,9 +4,9 @@ if not gst_tester.found()
 endif
 
 tests = [
-    {'path': 'opencv/cvtracker', 'skip': true},
-    {'path': 'testsrcbin/caps_spec', 'skip': true},
-    {'path': 'wpe/load_bytes_first', 'skip': true},
+    {'path': 'opencv/cvtracker'},
+    {'path': 'testsrcbin/caps_spec'},
+    {'path': 'wpe/load_bytes_first', 'skip': not building_wpe},
 ]
 
 env = environment()
